@@ -1,5 +1,15 @@
 FROM ghcr.io/openclaw/openclaw:2026.3.13-1
 
+USER root
+
+RUN mkdir /tmp/deps && \
+    cd /tmp/deps && \
+    npm init -y && \
+    npm i google-auth-library && \
+    mv node_modules/ /
+
+USER node
+
 RUN cd /app && \
     npx --yes clawhub@latest install agentic-coding && \
     npx --yes clawhub@latest install automation-workflows && \
