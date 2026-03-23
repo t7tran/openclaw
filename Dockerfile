@@ -15,10 +15,10 @@ RUN curl -fsSLo /build/usr/local/bin/yq https://github.com/mikefarah/yq/releases
 
 FROM ghcr.io/openclaw/openclaw:2026.3.22
 
-ENV HOMEBREW_PREFIX="/home/node/homebrew" \
-    HOMEBREW_CELLAR="/home/node/homebrew/Cellar" \
-    HOMEBREW_REPOSITORY="/home/node/homebrew" \
-    PATH="/home/node/homebrew/bin:/home/node/homebrew/sbin:$PATH"
+ENV HOMEBREW_PREFIX="/app/homebrew" \
+    HOMEBREW_CELLAR="/app/homebrew/Cellar" \
+    HOMEBREW_REPOSITORY="/app/homebrew" \
+    PATH="/app/homebrew/bin:/app/homebrew/sbin:$PATH"
 
 RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     cd /app && \
@@ -35,7 +35,7 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     npx --yes clawhub@latest install self-improving-agent && \
     npx --yes clawhub@latest install ui-ux-pro-max && \
     npx --yes clawhub@latest install word-docx && \
-    git clone https://github.com/Homebrew/brew /home/node/homebrew && \
+    git clone https://github.com/Homebrew/brew /app/homebrew && \
     brew install gogcli
 
 COPY --from=build /build /
