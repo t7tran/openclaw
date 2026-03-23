@@ -1,14 +1,21 @@
-FROM ghcr.io/openclaw/openclaw:2026.3.13-1
+FROM ghcr.io/openclaw/openclaw:2026.3.13-1 AS build
 
 USER root
 
-RUN mkdir /tmp/deps && \
-    cd /tmp/deps && \
+RUN mkdir -p /build/usr/local/bin
+RUN cd /build && \
     npm init -y && \
     npm i google-auth-library && \
     mv node_modules/ /
 
-USER node
+RUN curl -fsSLo /build/usr/local/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux64 && \
+    chmod +x /build/usr/local/bin/jq
+RUN curl -fsSLo /build/usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64 && \
+    chmod +x /build/usr/local/bin/yq
+
+FROM ghcr.io/openclaw/openclaw:2026.3.13-1
+
+COPY --from=build /build /
 
 RUN cd /app && \
     npx --yes clawhub@latest install agentic-coding && \
