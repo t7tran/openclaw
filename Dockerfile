@@ -20,7 +20,9 @@ ENV HOMEBREW_PREFIX="/home/node/homebrew" \
     HOMEBREW_REPOSITORY="/home/node/homebrew" \
     PATH="/home/node/homebrew/bin:/home/node/homebrew/sbin:$PATH"
 
-RUN cd /app && \
+RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
+    cd /app && \
+    npx --yes clawhub@latest login --token ${CLAWHUB_API_KEY:?} && \
     npx --yes clawhub@latest install agentic-coding && \
     npx --yes clawhub@latest install automation-workflows && \
     npx --yes clawhub@latest install markdown-converter && \
