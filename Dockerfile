@@ -6,7 +6,7 @@ RUN mkdir -p /build/usr/local/bin
 RUN cd /build && \
     npm init -y && \
     npm i google-auth-library && \
-    mv node_modules/ /
+    rm -rf package-lock.json package.json
 
 RUN curl -fsSLo /build/usr/local/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux64 && \
     chmod +x /build/usr/local/bin/jq
@@ -15,7 +15,10 @@ RUN curl -fsSLo /build/usr/local/bin/yq https://github.com/mikefarah/yq/releases
 
 FROM ghcr.io/openclaw/openclaw:2026.3.13-1
 
-COPY --from=build /build /
+ENV HOMEBREW_PREFIX="/home/node/homebrew" \
+    HOMEBREW_CELLAR="/home/node/homebrew/Cellar" \
+    HOMEBREW_REPOSITORY="/home/node/homebrew" \
+    PATH="/home/node/homebrew/bin:/home/node/homebrew/sbin:$PATH"
 
 RUN cd /app && \
     npx --yes clawhub@latest install agentic-coding && \
@@ -30,4 +33,7 @@ RUN cd /app && \
     npx --yes clawhub@latest install self-improving-agent && \
     npx --yes clawhub@latest install ui-ux-pro-max && \
     npx --yes clawhub@latest install word-docx && \
-    echo
+    git clone https://github.com/Homebrew/brew /home/node/homebrew && \
+    brew install gogcli
+
+COPY --from=build /build /
