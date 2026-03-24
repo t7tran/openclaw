@@ -32,7 +32,7 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     npx --yes clawhub@latest install playwright-mcp && \
     npx --yes clawhub@latest install salesforce-api && \
     npx --yes clawhub@latest install security-auditor && \
-    npx --yes clawhub@latest install self-improving-agent && \
+    npx --yes clawhub@latest install xiucheng-self-improving-agent && \
     npx --yes clawhub@latest install ui-ux-pro-max && \
     npx --yes clawhub@latest install word-docx && \
     git clone https://github.com/Homebrew/brew /app/homebrew && \
