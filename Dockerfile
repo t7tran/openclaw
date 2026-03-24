@@ -1,19 +1,15 @@
-FROM ghcr.io/openclaw/openclaw:2026.3.22 AS build
+FROM ghcr.io/openclaw/openclaw:2026.3.23 AS build
 
 USER root
 
 RUN mkdir -p /build/usr/local/bin
-RUN cd /build && \
-    npm init -y && \
-    npm i google-auth-library && \
-    rm -rf package-lock.json package.json
 
 RUN curl -fsSLo /build/usr/local/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux64 && \
     chmod +x /build/usr/local/bin/jq
 RUN curl -fsSLo /build/usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64 && \
     chmod +x /build/usr/local/bin/yq
 
-FROM ghcr.io/openclaw/openclaw:2026.3.22
+FROM ghcr.io/openclaw/openclaw:2026.3.23
 
 ENV HOMEBREW_PREFIX="/app/homebrew" \
     HOMEBREW_CELLAR="/app/homebrew/Cellar" \
