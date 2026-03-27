@@ -18,7 +18,8 @@ FROM ghcr.io/openclaw/openclaw:2026.3.13-1
 ENV HOMEBREW_PREFIX="/app/homebrew" \
     HOMEBREW_CELLAR="/app/homebrew/Cellar" \
     HOMEBREW_REPOSITORY="/app/homebrew" \
-    PATH="/app/homebrew/bin:/app/homebrew/sbin:$PATH"
+    NPM_CONFIG_PREFIX="/home/node/.npm-packages" \
+    PATH="/app/homebrew/bin:/app/homebrew/sbin:/home/node/.npm-packages/bin:$PATH"
 
 RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     cd /app && \
