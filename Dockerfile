@@ -1,4 +1,4 @@
-FROM ghcr.io/openclaw/openclaw:2026.3.24 AS build
+FROM ghcr.io/openclaw/openclaw:2026.3.28 AS build
 
 USER root
 
@@ -9,7 +9,7 @@ RUN curl -fsSLo /build/usr/local/bin/jq https://github.com/jqlang/jq/releases/do
 RUN curl -fsSLo /build/usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64 && \
     chmod +x /build/usr/local/bin/yq
 
-FROM ghcr.io/openclaw/openclaw:2026.3.24
+FROM ghcr.io/openclaw/openclaw:2026.3.28
 
 ENV HOMEBREW_PREFIX="/app/homebrew" \
     HOMEBREW_CELLAR="/app/homebrew/Cellar" \
