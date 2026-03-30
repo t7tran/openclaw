@@ -1,15 +1,18 @@
-FROM ghcr.io/openclaw/openclaw:2026.3.28 AS build
+FROM ghcr.io/openclaw/openclaw:2026.3.28
 
 USER root
 
-RUN mkdir -p /build/usr/local/bin
+RUN curl -fsSLo /usr/local/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux64 && \
+    chmod +x /usr/local/bin/jq && \
+    curl -fsSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64 && \
+    chmod +x /usr/local/bin/yq && \
+    apt update && \
+    curl -fsSLo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt install /tmp/chrome.deb -y && \
+    apt install --no-install-recommends -y fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf && \
+    rm -rf /tmp/*
 
-RUN curl -fsSLo /build/usr/local/bin/jq https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux64 && \
-    chmod +x /build/usr/local/bin/jq
-RUN curl -fsSLo /build/usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64 && \
-    chmod +x /build/usr/local/bin/yq
-
-FROM ghcr.io/openclaw/openclaw:2026.3.28
+USER node
 
 ENV HOMEBREW_PREFIX="/app/homebrew" \
     HOMEBREW_CELLAR="/app/homebrew/Cellar" \
@@ -34,5 +37,3 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     npx --yes clawhub@latest install word-docx && \
     git clone https://github.com/Homebrew/brew /app/homebrew && \
     brew install gogcli
-
-COPY --from=build /build /
