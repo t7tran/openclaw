@@ -27,6 +27,7 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     npx --yes clawhub@latest login --token ${CLAWHUB_API_KEY:?} && \
     npx --yes clawhub@latest install agentic-coding && \
     npx --yes clawhub@latest install automation-workflows && \
+    npx --yes clawhub@latest install imap-smtp-email && \
     npx --yes clawhub@latest install markdown-converter && \
     npx --yes clawhub@latest install microsoft-excel && \
     npx --yes clawhub@latest install n8n-workflow-automation && \
@@ -34,8 +35,11 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     npx --yes clawhub@latest install playwright-mcp && \
     npx --yes clawhub@latest install salesforce-api && \
     npx --yes clawhub@latest install security-auditor && \
-    npx --yes clawhub@latest install xiucheng-self-improving-agent && \
     npx --yes clawhub@latest install ui-ux-pro-max && \
     npx --yes clawhub@latest install word-docx && \
+    npx --yes clawhub@latest install xiucheng-self-improving-agent && \
+# post skill installation
+    cd /app/skills/imap-smtp-email && npm i && \
+# install homebrew
     git clone https://github.com/Homebrew/brew /app/homebrew && \
     brew install gogcli
