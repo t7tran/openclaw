@@ -41,6 +41,9 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
 # post skill installation
     cd /app/skills/imap-smtp-email && npm i && \
     chmod +x /app/skills/imap-smtp-email/scripts/*.js && \
+# remove bundled skills
+    cd /app/skills && \
+    rm -rf himalaya && \
 # install homebrew
     git clone https://github.com/Homebrew/brew /app/homebrew && \
     brew install gogcli
