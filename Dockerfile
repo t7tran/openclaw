@@ -40,6 +40,7 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     npx --yes clawhub@latest install xiucheng-self-improving-agent && \
 # post skill installation
     cd /app/skills/imap-smtp-email && npm i && \
+    chmod +x /app/skills/imap-smtp-email/scripts/*.js && \
 # install homebrew
     git clone https://github.com/Homebrew/brew /app/homebrew && \
     brew install gogcli
