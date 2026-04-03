@@ -6,8 +6,6 @@ RUN curl -fsSLo /usr/local/bin/jq https://github.com/jqlang/jq/releases/download
     chmod +x /usr/local/bin/jq && \
     curl -fsSLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64 && \
     chmod +x /usr/local/bin/yq && \
-    curl -fsSL https://github.com/pimalaya/himalaya/releases/download/v1.2.0/himalaya.x86_64-linux.tgz \
-         | tar -C /usr/local/bin -xvzf - --wildcards --no-anchored himalaya && \
     apt update && \
     curl -fsSLo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     apt install /tmp/chrome.deb -y && \
@@ -46,4 +44,5 @@ RUN --mount=type=secret,id=clawhub_apikey,env=CLAWHUB_API_KEY \
     rm -rf himalaya && \
 # install homebrew
     git clone https://github.com/Homebrew/brew /app/homebrew && \
+    brew install --cask claude-code && \
     brew install gogcli
